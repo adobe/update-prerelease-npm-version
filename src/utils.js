@@ -25,6 +25,9 @@ function parseSemanticVersion (semanticVersion) {
 /**
  * Generate a prerelease version based on the semantic version, a prerelease tag, and the current date.
  *
+ * Example: if the version is 1.2.3, and the prerelease tag is nightly, and the date is 20220420,
+ * the return value is 1.2.3-nightly.20220420
+ *
  * @param {string} semanticVersion the semantic version
  * @param {string} prereleaseTag the tag to use for the prerelease version
  * @returns {string} the new prerelease version
