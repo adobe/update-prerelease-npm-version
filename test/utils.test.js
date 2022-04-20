@@ -9,6 +9,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-test('stub', () => {
-  expect(true).toBe(false)
+const utils = require('../src/utils')
+
+test('exists', () => {
+  expect(utils.generatePrereleaseVersion).toBeDefined()
+  expect(utils.parseSemanticVersion).toBeDefined()
 })
