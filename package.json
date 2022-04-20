@@ -1,0 +1,16 @@
+{
+  "name": "@adobe/create-npm-nightly",
+  "version": "1.0.0",
+  "description": "A Github Action to create and publish your node module as a nightly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.1"
+  }
+}
