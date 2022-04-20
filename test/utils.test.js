@@ -9,9 +9,36 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const utils = require('../src/utils')
+const { generatePrereleaseVersion, parseSemanticVersion, getTodaysUTCDate } = require('../src/utils')
 
 test('exists', () => {
-  expect(utils.generatePrereleaseVersion).toBeDefined()
-  expect(utils.parseSemanticVersion).toBeDefined()
+  expect(generatePrereleaseVersion).toBeDefined()
+  expect(parseSemanticVersion).toBeDefined()
+})
+
+test('parseSemanticVersion', () => {
+  let sv = []
+
+  sv = parseSemanticVersion('1.2.3')
+  expect(sv[0]).toEqual(1)
+  expect(sv[1]).toEqual(2)
+  expect(sv[2]).toEqual(3)
+
+  sv = parseSemanticVersion('3.2.1-pre.0')
+  expect(sv[0]).toEqual(3)
+  expect(sv[1]).toEqual(2)
+  expect(sv[2]).toEqual(1)
+})
+
+test('generatePrereleaseVersion', () => {
+  const semanticVersion = '1.2.3'
+  const prereleaseTag = 'alpha'
+  const someDate = '20220101'
+  let result
+
+  result = generatePrereleaseVersion(semanticVersion, prereleaseTag)
+  expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${getTodaysUTCDate()}`)
+
+  result = generatePrereleaseVersion(semanticVersion, prereleaseTag, someDate)
+  expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${someDate}`)
 })

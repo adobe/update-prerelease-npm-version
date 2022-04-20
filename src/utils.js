@@ -18,8 +18,17 @@ const semverParse = require('semver/functions/parse')
  * @returns {Array} tuple of major, minor, patch version numbers
  */
 function parseSemanticVersion (semanticVersion) {
-  const sv = semverParse(semanticVersion)
+  const sv = semverParse(semanticVersion, { includePrerelease: true })
   return [sv.major, sv.minor, sv.patch]
+}
+
+/**
+ * Gets today's UTC date string.
+ *
+ * @returns {string} today's UTC date in  YYYYMMDD format
+ */
+function getTodaysUTCDate () {
+  return new Date().toISOString().split('T')[0]
 }
 
 /**
@@ -30,18 +39,17 @@ function parseSemanticVersion (semanticVersion) {
  *
  * @param {string} semanticVersion the semantic version
  * @param {string} prereleaseTag the tag to use for the prerelease version
+ * @param {string} [utcDate=today's utc date] the UTC date (YYYYMMDD)
  * @returns {string} the new prerelease version
  */
-function generatePrereleaseVersion (semanticVersion, prereleaseTag) {
+function generatePrereleaseVersion (semanticVersion, prereleaseTag, utcDate = getTodaysUTCDate()) {
   const [majorVersion, minorVersion, patchVersion] = parseSemanticVersion(semanticVersion)
-
-  // YYYYMMDD
-  const utcDate = new Date().toISOString().split('T')[0]
 
   return `${majorVersion}.${minorVersion}.${patchVersion}-${prereleaseTag}.${utcDate}`
 }
 
 module.exports = {
   parseSemanticVersion,
-  generatePrereleaseVersion
+  generatePrereleaseVersion,
+  getTodaysUTCDate
 }
