@@ -7,16 +7,20 @@
 # OF ANY KIND, either express or implied. See the License for the specific language
 # governing permissions and limitations under the License.
 
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Create npm pre-release'
+description: 'Modifies package.json with a pre-release version'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  pre-release-tag:
+    description: 'the pre-release tag to set'
     required: true
-    default: 'World'
+    default: 'nightly'
+  package-json-path:
+    description: 'the package.json file'
+    required: false
+    default: 'package.json'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  pre-release-version:
+    description: 'the pre-release version that was set'
 runs:
   using: 'node16'
-  main: 'index.js'
+  main: 'dist/index.js'

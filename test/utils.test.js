@@ -9,7 +9,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { generatePrereleaseVersion, parseSemanticVersion, getTodaysUTCDate } = require('../src/utils')
+const { getPackageJson, writePackageJson, generatePrereleaseVersion, parseSemanticVersion, getTodaysUTCDate } = require('../src/utils')
+const fs = require('fs')
+
+jest.mock('fs')
 
 test('exists', () => {
   expect(generatePrereleaseVersion).toBeDefined()
@@ -41,4 +44,23 @@ test('generatePrereleaseVersion', () => {
 
   result = generatePrereleaseVersion(semanticVersion, prereleaseTag, someDate)
   expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${someDate}`)
+})
+
+test('getPackageJson', () => {
+  const packageJson = { version: '1.2.3' }
+  fs.readFileSync.mockReturnValue(JSON.stringify(packageJson))
+
+  const retVal = getPackageJson('my-path')
+
+  expect(fs.readFileSync).toBeCalledTimes(1)
+  expect(retVal).toEqual(packageJson)
+})
+
+test('writePackageJson', () => {
+  const packageJson = { version: '2.3.4' }
+  const data = JSON.stringify(packageJson)
+
+  writePackageJson('my-path', data)
+
+  expect(fs.writeFileSync).toBeCalledTimes(1)
 })

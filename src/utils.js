@@ -10,6 +10,35 @@ governing permissions and limitations under the License.
 */
 
 const semverParse = require('semver/functions/parse')
+const fs = require('fs')
+const path = require('path')
+
+/**
+ * Get package.json contents as json
+ *
+ * @param {string} filePath the file path to the package.json file
+ * @returns {object} the package.json contents as json
+ */
+function getPackageJson (filePath) {
+  const npath = path.normalize(filePath)
+  const foptions = { encoding: 'utf-8' }
+
+  const contents = fs.readFileSync(npath, foptions)
+  return JSON.parse(contents)
+}
+
+/**
+ * Write the object to the package.json file
+ *
+ * @param {string} filePath the file path to the package.json file
+ * @param {string} data the data to write to the file
+ */
+function writePackageJson (filePath, data) {
+  const npath = path.normalize(filePath)
+  const foptions = { encoding: 'utf-8' }
+
+  fs.writeFileSync(npath, data, foptions)
+}
 
 /**
  * Parses the semantic version.
@@ -51,5 +80,7 @@ function generatePrereleaseVersion (semanticVersion, prereleaseTag, utcDate = ge
 module.exports = {
   parseSemanticVersion,
   generatePrereleaseVersion,
-  getTodaysUTCDate
+  getTodaysUTCDate,
+  getPackageJson,
+  writePackageJson
 }

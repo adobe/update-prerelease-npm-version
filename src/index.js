@@ -11,9 +11,17 @@ governing permissions and limitations under the License.
 
 const core = require('@actions/core')
 const github = require('@actions/github')
+const { getPackageJson, writePackageJson, generatePrereleaseVersion } = require('./utils')
 
-const tag = core.getInput('tag')
-const payload = JSON.stringify(github.context.payload, undefined, 2)
+const preReleaseTag = core.getInput('pre-release-tag')
+const packageJsonPath = core.getInput('package-json-path')
 
-console.log(`tag: ${tag}`)
-console.log(`payload: ${payload}`)
+const packageJson = getPackageJson(packageJsonPath)
+const preReleaseVersion = generatePrereleaseVersion(packageJson.version, preReleaseTag)
+
+// update package.json with pre-release version, last git commit sha
+packageJson.version = preReleaseVersion
+packageJson.prereleaseSha = github.context.sha
+writePackageJson(packageJsonPath, JSON.stringify(packageJson, null, 2))
+
+core.setOutput('pre-release-version', preReleaseVersion)
