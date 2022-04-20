@@ -2,15 +2,32 @@
   "name": "@adobe/create-npm-nightly",
   "version": "1.0.0",
   "description": "A Github Action to create and publish your node module as a nightly.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src test",
+    "test": "npm run unit-tests",
+    "unit-tests": "jest --ci",
+    "posttest": "npm run lint",
+    "package": "ncc build src/index.js -o dist/"
   },
   "keywords": [],
-  "author": "",
+  "author": "Adobe Inc.",
   "license": "Apache-2.0",
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.1"
+  },
+  "devDependencies": {
+    "@adobe/eslint-config-aio-lib-config": "^1.4.0",
+    "@vercel/ncc": "^0.33.4",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-jsdoc": "^37.9.7",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "jest": "^27.5.1",
+    "typescript": "^4.6.3"
   }
 }
