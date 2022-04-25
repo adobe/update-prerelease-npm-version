@@ -17,7 +17,6 @@ This action provides the following functionality for GitHub Actions users:
 
 - appends a pre-release tag with the current date in YYYYMMDD
   - for example if your current version is 1.2.3, the pre-release tag is "nightly" and the date is 2022-04-25 (April 25th, 2022) the pre-release version will be 1.2.3-nightly.20220425
-- publishes
 
 # Usage
 
