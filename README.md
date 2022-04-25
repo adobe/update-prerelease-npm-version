@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 
 # update-nightly-npm-version
 
-A Github Action to create and publish your node module as a nightly version.
+A Github Action to update your node module version as a nightly version.
 
 This action provides the following functionality for GitHub Actions users:
 
@@ -30,7 +30,7 @@ steps:
   with:
     pre-release-tag: nightly
     package-json-path: package.json
-- run: npm publish --tag next
+- run: npm publish --tag nightly
 ```
 
 ## Contributing
