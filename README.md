@@ -18,6 +18,8 @@ This action provides the following functionality for GitHub Actions users:
 - generates a pre-release version string with the current date in YYYYMMDD
   - for example if your current version is `1.2.3`, the pre-release tag is `nightly` and the date is `2022-04-25` (April 25th, 2022) the pre-release version will be `1.2.3-nightly.20220425`
 - modifies your `package.json` **version** property with this generated pre-release version string
+- adds a **prereleaseSha** property to your `package.json`. This contains the latest SHA commit of the repo prior to publishing
+- outputs the generated pre-release version string as `pre-release-version`
 
 # Usage
 
