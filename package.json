@@ -1,7 +1,7 @@
 {
-  "name": "@adobe/create-npm-nightly",
+  "name": "@adobe/update-nightly-npm-version",
   "version": "1.0.0",
-  "description": "A Github Action to create and publish your node module as a nightly.",
+  "description": "A Github Action to update your node package.json to a nightly version",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint src test",

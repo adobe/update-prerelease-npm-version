@@ -7,7 +7,7 @@
 # OF ANY KIND, either express or implied. See the License for the specific language
 # governing permissions and limitations under the License.
 
-name: 'Create npm pre-release'
+name: 'Update package.json with an npm pre-release version'
 description: 'Modifies package.json with a pre-release version'
 inputs:
   pre-release-tag:
