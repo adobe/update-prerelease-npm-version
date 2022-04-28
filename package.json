@@ -1,7 +1,7 @@
 {
-  "name": "@adobe/update-nightly-npm-version",
+  "name": "@adobe/update-prerelease-npm-version",
   "version": "1.0.0",
-  "description": "A Github Action to update your node package.json to a nightly version",
+  "description": "A Github Action to update your node package.json to a prerelease version",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint src test",
