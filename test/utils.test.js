@@ -37,13 +37,17 @@ test('generatePrereleaseVersion', () => {
   const semanticVersion = '1.2.3'
   const prereleaseTag = 'alpha'
   const someDate = '20220101'
+  const shaHash = 'abcde1234567890'
+  const truncatedShaHash = shaHash.substring(0, 8)
   let result
 
-  result = generatePrereleaseVersion(semanticVersion, prereleaseTag)
-  expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${getTodaysUTCDate()}`)
+  expect(truncatedShaHash).toEqual('abcde123')
 
-  result = generatePrereleaseVersion(semanticVersion, prereleaseTag, someDate)
-  expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${someDate}`)
+  result = generatePrereleaseVersion(semanticVersion, prereleaseTag, shaHash)
+  expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${getTodaysUTCDate()}.${truncatedShaHash}`)
+
+  result = generatePrereleaseVersion(semanticVersion, prereleaseTag, shaHash, someDate)
+  expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${someDate}.${truncatedShaHash}`)
 })
 
 test('getPackageJson', () => {

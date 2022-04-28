@@ -15,13 +15,14 @@ const { getPackageJson, writePackageJson, generatePrereleaseVersion } = require(
 
 const preReleaseTag = core.getInput('pre-release-tag')
 const packageJsonPath = core.getInput('package-json-path')
+const shaHash = github.context.sha
 
 const packageJson = getPackageJson(packageJsonPath)
-const preReleaseVersion = generatePrereleaseVersion(packageJson.version, preReleaseTag)
+const preReleaseVersion = generatePrereleaseVersion(packageJson.version, preReleaseTag, shaHash)
 
 // update package.json with pre-release version, last git commit sha
 packageJson.version = preReleaseVersion
-packageJson.prereleaseSha = github.context.sha
+packageJson.prereleaseSha = shaHash
 writePackageJson(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
 core.setOutput('pre-release-version', preReleaseVersion)

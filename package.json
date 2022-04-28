@@ -8,6 +8,7 @@
     "test": "npm run unit-tests",
     "unit-tests": "jest --ci",
     "posttest": "npm run lint",
+    "build": "npm run package",
     "package": "ncc build src/index.js -o dist/"
   },
   "keywords": [],

@@ -68,13 +68,15 @@ function getTodaysUTCDate () {
  *
  * @param {string} semanticVersion the semantic version
  * @param {string} prereleaseTag the tag to use for the prerelease version
+ * @param {string} shaHash the git repo shaHash for the pre-release version
  * @param {string} [utcDate=today's utc date] the UTC date (YYYYMMDD)
  * @returns {string} the new prerelease version
  */
-function generatePrereleaseVersion (semanticVersion, prereleaseTag, utcDate = getTodaysUTCDate()) {
+function generatePrereleaseVersion (semanticVersion, prereleaseTag, shaHash, utcDate = getTodaysUTCDate()) {
   const [majorVersion, minorVersion, patchVersion] = parseSemanticVersion(semanticVersion)
+  const truncatedShaHash = shaHash.substring(0, 8)
 
-  return `${majorVersion}.${minorVersion}.${patchVersion}-${prereleaseTag}.${utcDate}`
+  return `${majorVersion}.${minorVersion}.${patchVersion}-${prereleaseTag}.${utcDate}.${truncatedShaHash}`
 }
 
 module.exports = {
