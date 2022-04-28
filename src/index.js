@@ -19,11 +19,11 @@ const dependenciesToUpdate = core.getInput('dependencies-to-update').trim().spli
 const dependenciesToUpdateVersionTag = core.getInput('dependencies-to-update-version-tag')
 const shaHash = github.context.sha
 
-core.debug('pre-release-tag', dependenciesToUpdate)
-core.debug('package-json-path', dependenciesToUpdate)
-core.debug('dependencies-to-update', dependenciesToUpdate)
-core.debug('dependencies-to-update-version-tag', dependenciesToUpdateVersionTag)
-core.debug('shaHash', shaHash)
+core.debug(`pre-release-tag ${dependenciesToUpdate}`)
+core.debug(`package-json-path ${dependenciesToUpdate}`)
+core.debug(`dependencies-to-update ${dependenciesToUpdate}`)
+core.debug(`dependencies-to-update-version-tag ${dependenciesToUpdateVersionTag}`)
+core.debug(`shaHash ${shaHash}`)
 
 const packageJson = getPackageJson(packageJsonPath)
 const preReleaseVersion = generatePrereleaseVersion(packageJson.version, preReleaseTag, shaHash)
