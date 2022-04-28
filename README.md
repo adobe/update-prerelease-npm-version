@@ -37,6 +37,11 @@ steps:
     pre-release-tag: 'mytag' 
     # if not specified, use the default "package.json" (optional)
     package-json-path: 'some/path/package.json'
+    # if specified, it will find the dependencies in package.json and update with the dependencies-to-update-version-tag
+    dependencies-to-update: semver,to-camel-case
+    # the version tag to update the dependencies-to-update list with
+    dependencies-to-update-version-tag: next
+
 # your package.json version should be transformed after the previous step
 - run: cat package.json
 # access the pre-release version output. output variable is "pre-release-version"
