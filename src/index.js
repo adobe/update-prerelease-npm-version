@@ -19,6 +19,12 @@ const dependenciesToUpdate = core.getMultilineInput('dependencies-to-update')
 const dependenciesToUpdateVersionTag = core.getInput('dependencies-to-update-version-tag')
 const shaHash = github.context.sha
 
+core.debug('pre-release-tag', dependenciesToUpdate)
+core.debug('package-json-path', dependenciesToUpdate)
+core.debug('dependencies-to-update', dependenciesToUpdate)
+core.debug('dependencies-to-update-version-tag', dependenciesToUpdateVersionTag)
+core.debug('shaHash', shaHash)
+
 const packageJson = getPackageJson(packageJsonPath)
 const preReleaseVersion = generatePrereleaseVersion(packageJson.version, preReleaseTag, shaHash)
 
@@ -30,11 +36,10 @@ packageJson.prereleaseSha = shaHash
 if (dependenciesToUpdate.length === 0) {
   core.info('no dependencies to update')
 } else {
-  const pkgJsonDeps = packageJson.dependencies
   dependenciesToUpdate.forEach(dep => {
-    if (pkgJsonDeps[dep]) {
+    if (packageJson.dependencies[dep]) {
       core.info(`updating dependency '${dep}' version to '${dependenciesToUpdateVersionTag}'`)
-      pkgJsonDeps[dep] = dependenciesToUpdateVersionTag
+      packageJson.dependencies[dep] = dependenciesToUpdateVersionTag
     } else {
       core.error(`dependency ${dep} was not found in the package.json file.`)
     }
