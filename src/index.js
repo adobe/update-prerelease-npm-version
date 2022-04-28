@@ -41,6 +41,7 @@ if (dependenciesToUpdate.length === 0) {
       core.info(`updating dependency '${dep}' version to '${dependenciesToUpdateVersionTag}'`)
       packageJson.dependencies[dep] = dependenciesToUpdateVersionTag
     } else {
+      core.error(`len: ${dependenciesToUpdate.length} ${JSON.stringify(dependenciesToUpdate)}`)
       core.error(`dependency ${dep} was not found in the package.json file.`)
     }
   })

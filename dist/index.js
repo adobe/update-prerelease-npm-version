@@ -9191,15 +9191,15 @@ const { getPackageJson, writePackageJson, generatePrereleaseVersion } = __nccwpc
 
 const preReleaseTag = core.getInput('pre-release-tag')
 const packageJsonPath = core.getInput('package-json-path')
-const dependenciesToUpdate = core.getMultilineInput('dependencies-to-update')
+const dependenciesToUpdate = core.getInput('dependencies-to-update').trim().split(',')
 const dependenciesToUpdateVersionTag = core.getInput('dependencies-to-update-version-tag')
 const shaHash = github.context.sha
 
-core.debug('pre-release-tag', dependenciesToUpdate)
-core.debug('package-json-path', dependenciesToUpdate)
-core.debug('dependencies-to-update', dependenciesToUpdate)
-core.debug('dependencies-to-update-version-tag', dependenciesToUpdateVersionTag)
-core.debug('shaHash', shaHash)
+console.log(`pre-release-tag ${dependenciesToUpdate}`)
+console.log(`package-json-path ${dependenciesToUpdate}`)
+console.log(`dependencies-to-update ${dependenciesToUpdate}`)
+console.log(`dependencies-to-update-version-tag ${dependenciesToUpdateVersionTag}`)
+console.log(`shaHash ${shaHash}`)
 
 const packageJson = getPackageJson(packageJsonPath)
 const preReleaseVersion = generatePrereleaseVersion(packageJson.version, preReleaseTag, shaHash)
@@ -9217,6 +9217,7 @@ if (dependenciesToUpdate.length === 0) {
       core.info(`updating dependency '${dep}' version to '${dependenciesToUpdateVersionTag}'`)
       packageJson.dependencies[dep] = dependenciesToUpdateVersionTag
     } else {
+      core.error(`len: ${dependenciesToUpdate.length} ${JSON.stringify(dependenciesToUpdate)}`)
       core.error(`dependency ${dep} was not found in the package.json file.`)
     }
   })
