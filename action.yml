@@ -18,6 +18,15 @@ inputs:
     description: 'the package.json file'
     required: false
     default: 'package.json'
+  dependencies-to-update:
+    description: 'the dependencies to update with a version tag (separated by a newline character)'
+    required: false
+    default: ''
+  dependencies-to-update-version-tag:
+    description: 'the version tag for the dependencies to update'
+    required: false
+    default: 'next'
+
 outputs:
   pre-release-version:
     description: 'the pre-release version that was set'

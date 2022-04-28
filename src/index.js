@@ -15,6 +15,8 @@ const { getPackageJson, writePackageJson, generatePrereleaseVersion } = require(
 
 const preReleaseTag = core.getInput('pre-release-tag')
 const packageJsonPath = core.getInput('package-json-path')
+const dependenciesToUpdate = core.getMultilineInput('dependencies-to-update')
+const dependenciesToUpdateVersionTag = core.getInput('dependencies-to-update-version-tag')
 const shaHash = github.context.sha
 
 const packageJson = getPackageJson(packageJsonPath)
@@ -23,6 +25,23 @@ const preReleaseVersion = generatePrereleaseVersion(packageJson.version, preRele
 // update package.json with pre-release version, last git commit sha
 packageJson.version = preReleaseVersion
 packageJson.prereleaseSha = shaHash
+
+// if there are dependencies to update, update with the dependencies version tag
+if (dependenciesToUpdate.length === 0) {
+  core.info('no dependencies to update')
+} else {
+  const pkgJsonDeps = packageJson.dependencies
+  dependenciesToUpdate.forEach(dep => {
+    if (pkgJsonDeps[dep]) {
+      core.info(`updating dependency '${dep}' version to '${dependenciesToUpdateVersionTag}'`)
+      pkgJsonDeps[dep] = dependenciesToUpdateVersionTag
+    } else {
+      core.error(`dependency ${dep} was not found in the package.json file.`)
+    }
+  })
+}
+
+// write the modified package.json
 writePackageJson(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
 core.setOutput('pre-release-version', preReleaseVersion)
