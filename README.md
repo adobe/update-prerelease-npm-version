@@ -15,11 +15,11 @@ A Github Action to update your node module version with a prerelease version.
 
 This action provides the following functionality for GitHub Actions users:
 
-- generates a pre-release version string with the current date in YYYY-MM-DD, and the `sha` hash of the latest commit
+- generates a pre-release version string with a tag, the current date in YYYY-MM-DD, and the `sha` hash of the latest commit
   - for example if your current version is `1.2.3`, the pre-release tag is `pre`,the date is `2022-04-25` (April 25th, 2022 UTC), and the `sha` commit (first 8 characters) is `abcde123` the pre-release version will be `1.2.3-pre.2022-04-25.abcde123`
 - modifies your `package.json` **version** property with this generated pre-release version string
 - adds a **prereleaseSha** property to your `package.json`. This contains the latest SHA commit of the repo prior to publishing
-- outputs the generated pre-release version string as `pre-release-version`
+- outputs the generated pre-release version string into the `pre-release-version` output variable
 
 # Usage
 
@@ -29,10 +29,18 @@ See [action.yml](action.yml)
 
 ```yaml
 steps:
-- uses: adobe/update-prerelease-npm-version@v1.0.0
+- name: Update your package.json with an npm pre-release version
+  id: pre-release-version
+  uses: adobe/update-prerelease-npm-version@v1.0.0
   with:
-    pre-release-tag: pre
-    package-json-path: package.json
+    # if not specified, use the default "pre" (optional)
+    pre-release-tag: 'mytag' 
+    # if not specified, use the default "package.json" (optional)
+    package-json-path: 'some/path/package.json'
+# your package.json version should be transformed after the previous step
+- run: cat package.json
+# access the pre-release version output. output variable is "pre-release-version"
+- run: echo ${{ steps.pre-release-version.outputs.pre-release-version }} 
 # then you publish your package with this pre-release version, under a tag (say 'next' here)
 - run: npm publish --tag next
 ```
