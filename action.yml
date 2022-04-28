@@ -19,7 +19,7 @@ inputs:
     required: false
     default: 'package.json'
   dependencies-to-update:
-    description: 'the dependencies to update with a version tag (separated by a newline character)'
+    description: 'the dependencies to update with a version tag (comma separated)'
     required: false
     default: ''
   dependencies-to-update-version-tag:

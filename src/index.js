@@ -22,6 +22,7 @@ const shaHash = github.context.sha
 core.info(`pre-release-tag - ${preReleaseTag}`)
 core.info(`package-json-path - ${packageJsonPath}`)
 core.info(`dependencies-to-update - ${dependenciesToUpdate}`)
+core.info(`dependencies-to-update (length)- ${dependenciesToUpdate ? dependenciesToUpdate.length : 0}`)
 core.info(`dependencies-to-update-version-tag - ${dependenciesToUpdateVersionTag}`)
 core.info(`shaHash - ${shaHash}`)
 
