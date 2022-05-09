@@ -26,6 +26,9 @@ inputs:
     description: 'the version tag for the dependencies to update'
     required: false
     default: 'next'
+  package-name:
+    description: 'the new package name to publish to'
+    required: false
 
 outputs:
   pre-release-version:
