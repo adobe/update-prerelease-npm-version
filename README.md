@@ -41,6 +41,8 @@ steps:
     dependencies-to-update: semver,to-camel-case
     # the version tag to update the dependencies-to-update list with
     dependencies-to-update-version-tag: next
+    # the package name to publish to (optional)
+    package-name: @adobe/my-cli-next
 
 # your package.json version should be transformed after the previous step
 - run: cat package.json
