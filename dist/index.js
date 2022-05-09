@@ -9193,6 +9193,7 @@ const preReleaseTag = core.getInput('pre-release-tag')
 const packageJsonPath = core.getInput('package-json-path')
 const dependenciesToUpdate = core.getInput('dependencies-to-update').trim().split(',')
 const dependenciesToUpdateVersionTag = core.getInput('dependencies-to-update-version-tag')
+const packageName = core.getInput('package-name')
 const shaHash = github.context.sha
 
 core.info(`pre-release-tag - ${preReleaseTag}`)
@@ -9200,14 +9201,22 @@ core.info(`package-json-path - ${packageJsonPath}`)
 core.info(`dependencies-to-update - ${dependenciesToUpdate}`)
 core.info(`dependencies-to-update (length)- ${dependenciesToUpdate ? dependenciesToUpdate.length : 0}`)
 core.info(`dependencies-to-update-version-tag - ${dependenciesToUpdateVersionTag}`)
+core.info(`package-name - ${packageName}`)
 core.info(`shaHash - ${shaHash}`)
 
 const packageJson = getPackageJson(packageJsonPath)
 const preReleaseVersion = generatePrereleaseVersion(packageJson.version, preReleaseTag, shaHash)
 
-// update package.json with pre-release version, last git commit sha
+// update package.json with:
+// 1. pre-release version
+// 2. last git commit sha
+// 3. package name (if set)
 packageJson.version = preReleaseVersion
 packageJson.prereleaseSha = shaHash
+
+if (packageName && packageName.trim().length > 0) {
+  packageJson.name = packageName
+}
 
 // if there are dependencies to update, update with the dependencies version tag
 if (dependenciesToUpdate.length === 0) {
