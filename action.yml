@@ -9,6 +9,9 @@
 
 name: 'Update your package.json with an npm pre-release version, and update dependencies with pre-release versions'
 description: 'Modifies your package.json with a pre-release version in the form X.Y.Z-pre.YYYMMDD.<commitShaHash>'
+branding:
+  icon: 'box'  
+  color: 'red'
 inputs:
   pre-release-tag:
     description: 'the pre-release tag to set'
