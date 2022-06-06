@@ -15,7 +15,7 @@ const { getPackageJson, writePackageJson, generatePrereleaseVersion } = require(
 
 const preReleaseTag = core.getInput('pre-release-tag')
 const packageJsonPath = core.getInput('package-json-path')
-const dependenciesToUpdate = core.getInput('dependencies-to-update').trim().split(',')
+const dependenciesToUpdate = core.getInput('dependencies-to-update').trim().split(',').filter(d => d) // filter empty strings
 const dependenciesToUpdateVersionTag = core.getInput('dependencies-to-update-version-tag')
 const packageName = core.getInput('package-name')
 const shaHash = github.context.sha
