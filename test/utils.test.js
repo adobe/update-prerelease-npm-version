@@ -76,11 +76,11 @@ describe('generatePrereleaseVersion', () => {
     let result
 
     result = generatePrereleaseVersion(semanticVersion, prereleaseTag, shaHash)
-    expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${getTodaysUTCDate()}.${truncatedShaHash}`)
+    expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${getTodaysUTCDate()}.sha-${truncatedShaHash}`)
     expect(semverValid(result)).toBeTruthy()
 
     result = generatePrereleaseVersion(semanticVersion, prereleaseTag, shaHash, someDate)
-    expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${someDate}.${truncatedShaHash}`)
+    expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${someDate}.sha-${truncatedShaHash}`)
     expect(semverValid(result)).toBeTruthy()
   }
 
