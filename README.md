@@ -16,7 +16,7 @@ A Github Action to update your node module version with a prerelease version.
 This action provides the following functionality for GitHub Actions users:
 
 - generates a pre-release version string with a tag, the current date in YYYY-MM-DD, and the `sha` hash of the latest commit
-  - for example if your current version is `1.2.3`, the pre-release tag is `pre`,the date is `2022-04-25` (April 25th, 2022 UTC), and the `sha` commit (first 8 characters) is `abcde123` the pre-release version will be `1.2.3-pre.2022-04-25.abcde123`
+  - for example if your current version is `1.2.3`, the pre-release tag is `pre`,the date is `2022-04-25` (April 25th, 2022 UTC), and the `sha` commit (first 8 characters) is `abcde123` the pre-release version will be `1.2.3-pre.2022-04-25.sha-abcde123`
 - modifies your `package.json` **version** property with this generated pre-release version string
 - adds a **prereleaseSha** property to your `package.json`. This contains the latest SHA commit of the repo prior to publishing
 - outputs the generated pre-release version string into the `pre-release-version` output variable
