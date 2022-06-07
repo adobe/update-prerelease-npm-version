@@ -76,7 +76,7 @@ function generatePrereleaseVersion (semanticVersion, prereleaseTag, shaHash, utc
   const [majorVersion, minorVersion, patchVersion] = parseSemanticVersion(semanticVersion)
   const truncatedShaHash = shaHash.substring(0, 8)
 
-  return `${majorVersion}.${minorVersion}.${patchVersion}-${prereleaseTag}.${utcDate}.${truncatedShaHash}`
+  return `${majorVersion}.${minorVersion}.${patchVersion}-${prereleaseTag}.${utcDate}.sha-${truncatedShaHash}`
 }
 
 module.exports = {

@@ -9,10 +9,27 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { getPackageJson, writePackageJson, generatePrereleaseVersion, parseSemanticVersion, getTodaysUTCDate } = require('../src/utils')
+const {
+  getPackageJson,
+  writePackageJson,
+  generatePrereleaseVersion,
+  parseSemanticVersion,
+  getTodaysUTCDate
+} = require('../src/utils')
 const fs = require('fs')
+const semverValid = require('semver/functions/valid')
 
 jest.mock('fs')
+
+/* eslint jest/expect-expect: [
+  "error",
+  {
+    "assertFunctionNames": [
+        "expect", "doTest"
+    ]
+  }
+]
+*/
 
 test('exists', () => {
   expect(generatePrereleaseVersion).toBeDefined()
@@ -33,23 +50,6 @@ test('parseSemanticVersion', () => {
   expect(sv[2]).toEqual(1)
 })
 
-test('generatePrereleaseVersion', () => {
-  const semanticVersion = '1.2.3'
-  const prereleaseTag = 'alpha'
-  const someDate = '20220101'
-  const shaHash = 'abcde1234567890'
-  const truncatedShaHash = shaHash.substring(0, 8)
-  let result
-
-  expect(truncatedShaHash).toEqual('abcde123')
-
-  result = generatePrereleaseVersion(semanticVersion, prereleaseTag, shaHash)
-  expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${getTodaysUTCDate()}.${truncatedShaHash}`)
-
-  result = generatePrereleaseVersion(semanticVersion, prereleaseTag, shaHash, someDate)
-  expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${someDate}.${truncatedShaHash}`)
-})
-
 test('getPackageJson', () => {
   const packageJson = { version: '1.2.3' }
   fs.readFileSync.mockReturnValue(JSON.stringify(packageJson))
@@ -67,4 +67,65 @@ test('writePackageJson', () => {
   writePackageJson('my-path', data)
 
   expect(fs.writeFileSync).toBeCalledTimes(1)
+})
+
+describe('generatePrereleaseVersion', () => {
+  /** @private */
+  function doTest (semanticVersion, prereleaseTag, shaHash, someDate) {
+    const truncatedShaHash = shaHash.substring(0, 8)
+    let result
+
+    result = generatePrereleaseVersion(semanticVersion, prereleaseTag, shaHash)
+    expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${getTodaysUTCDate()}.sha-${truncatedShaHash}`)
+    expect(semverValid(result)).toBeTruthy()
+
+    result = generatePrereleaseVersion(semanticVersion, prereleaseTag, shaHash, someDate)
+    expect(result).toEqual(`${semanticVersion}-${prereleaseTag}.${someDate}.sha-${truncatedShaHash}`)
+    expect(semverValid(result)).toBeTruthy()
+  }
+
+  test('alphanumeric hash - no leading zero', () => {
+    const semanticVersion = '1.2.3'
+    const prereleaseTag = 'alpha'
+    const someDate = '2022-01-01'
+    const shaHash = 'abcde1234567890'
+
+    doTest(semanticVersion, prereleaseTag, shaHash, someDate)
+  })
+
+  test('alphanumeric hash - leading zero', () => {
+    const semanticVersion = '1.2.3'
+    const prereleaseTag = 'alpha'
+    const someDate = '2022-01-01'
+    const shaHash = '0a12b34567890'
+
+    doTest(semanticVersion, prereleaseTag, shaHash, someDate)
+  })
+
+  test('all digits hash - leading zero', () => {
+    const semanticVersion = '1.2.3'
+    const prereleaseTag = 'alpha'
+    const someDate = '2022-01-01'
+    const shaHash = '01234567890'
+
+    doTest(semanticVersion, prereleaseTag, shaHash, someDate)
+  })
+
+  test('all digits hash - no leading zero', () => {
+    const semanticVersion = '1.2.3'
+    const prereleaseTag = 'alpha'
+    const someDate = '2022-01-01'
+    const shaHash = '1234567890'
+
+    doTest(semanticVersion, prereleaseTag, shaHash, someDate)
+  })
+
+  test('all digits hash - just one zero', () => {
+    const semanticVersion = '1.2.3'
+    const prereleaseTag = 'alpha'
+    const someDate = '2022-01-01'
+    const shaHash = '0'
+
+    doTest(semanticVersion, prereleaseTag, shaHash, someDate)
+  })
 })
