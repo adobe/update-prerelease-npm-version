@@ -21,7 +21,7 @@ This action provides the following functionality for GitHub Actions users:
 - adds a **prereleaseSha** property to your `package.json`. This contains the latest SHA commit of the repo prior to publishing
 - outputs the generated pre-release version string into the `pre-release-version` output variable
 
-# Usage
+## Usage
 
 See [action.yml](action.yml)
 
@@ -51,6 +51,10 @@ steps:
 # then you publish your package with this pre-release version, under a tag (say 'next' here)
 - run: npm publish --tag next
 ```
+
+## Development
+
+- Don't forget to run `npm run package` to generate package your new code for use, before publishing.
 
 ## Contributing
 
