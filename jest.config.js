@@ -12,8 +12,7 @@ governing permissions and limitations under the License.
 module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/**/*.js',
-    '!src/index.js'
+    'src/**/*.js'
   ],
   coverageThreshold: {
     global: {
