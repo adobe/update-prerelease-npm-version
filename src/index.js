@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Adobe. All rights reserved.
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,6 +18,7 @@ const packageJsonPath = core.getInput('package-json-path')
 const dependenciesToUpdate = core.getInput('dependencies-to-update').trim().split(',').filter(d => d) // filter empty strings
 const dependenciesToUpdateVersionTag = core.getInput('dependencies-to-update-version-tag')
 const packageName = core.getInput('package-name')
+const skipDependenciesToUpdate = core.getInput('skip-dependencies-to-update')
 const shaHash = github.context.sha
 
 core.info(`pre-release-tag - ${preReleaseTag}`)
@@ -26,6 +27,7 @@ core.info(`dependencies-to-update - ${dependenciesToUpdate}`)
 core.info(`dependencies-to-update (length)- ${dependenciesToUpdate ? dependenciesToUpdate.length : 0}`)
 core.info(`dependencies-to-update-version-tag - ${dependenciesToUpdateVersionTag}`)
 core.info(`package-name - ${packageName}`)
+core.info(`skip-dependencies-to-update - ${skipDependenciesToUpdate}`)
 core.info(`shaHash - ${shaHash}`)
 
 const packageJson = getPackageJson(packageJsonPath)
@@ -43,7 +45,7 @@ if (packageName && packageName.trim().length > 0) {
 }
 
 // if there are dependencies to update, update with the dependencies version tag
-if (dependenciesToUpdate.length === 0) {
+if (skipDependenciesToUpdate || dependenciesToUpdate.length === 0) {
   core.info('no dependencies to update')
 } else {
   dependenciesToUpdate.forEach(dep => {
