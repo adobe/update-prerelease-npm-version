@@ -43,7 +43,7 @@ steps:
     dependencies-to-update-version-tag: next
     # the package name to publish to (optional)
     package-name: @adobe/my-cli-next
-    # the package name to publish to (optional)
+    # boolean whether to skip dependencies-to-update (optional)
     skip-dependencies-to-update: false
 
 # your package.json version should be transformed after the previous step
