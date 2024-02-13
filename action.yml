@@ -41,5 +41,5 @@ outputs:
   pre-release-version:
     description: 'the pre-release version that was set'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
