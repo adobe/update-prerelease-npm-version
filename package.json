@@ -1,6 +1,6 @@
 {
   "name": "@adobe/update-prerelease-npm-version",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A Github Action to update your node package.json to a prerelease version",
   "main": "dist/index.js",
   "scripts": {
@@ -35,5 +35,5 @@
   },
   "engines": {
     "node": ">=8.3.0"
-  }  
+  }
 }
