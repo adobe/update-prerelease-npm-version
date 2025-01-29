@@ -56,7 +56,7 @@ test('getPackageJson', () => {
 
   const retVal = getPackageJson('my-path')
 
-  expect(fs.readFileSync).toBeCalledTimes(1)
+  expect(fs.readFileSync).toHaveBeenCalledTimes(1)
   expect(retVal).toEqual(packageJson)
 })
 
@@ -66,7 +66,7 @@ test('writePackageJson', () => {
 
   writePackageJson('my-path', data)
 
-  expect(fs.writeFileSync).toBeCalledTimes(1)
+  expect(fs.writeFileSync).toHaveBeenCalledTimes(1)
 })
 
 describe('generatePrereleaseVersion', () => {
